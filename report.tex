@@ -1,1 +1,81 @@
-/document
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath, amssymb}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{tikz}
+\usepackage{hyperref}
+\usepackage{natbib}
+
+\title{Auditing the 3rd-Place Solution to the Jigsaw Unintended Bias in Toxicity Classification Competition}
+\author{Ian Tang \and Nick Chen \\ DS-UA 202, Spring 2026 (Group 21)}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+\end{abstract}
+
+\section{Introduction}
+
+\section{Background}
+\subsection{The Civil Comments dataset and Jigsaw competition}
+\subsection{The 3rd-place solution under audit}
+\subsection{Normative framing: fairness as the spine of the audit}
+
+\section{Input Data Profiling}
+\subsection{Dataset composition}
+\subsection{Identity-subgroup coverage and base rates}
+\subsection{Critique of the toxicity-score definition}
+
+\section{The ADS Implementation}
+\subsection{Recreation scope and deviations from the original}
+\subsection{Architecture: BERT-large + LSTM-GRU multi-task ensemble}
+\subsection{Training and Optuna-blended weights}
+
+\section{Stakeholder Analysis}
+
+\section{Audit Outcomes}
+\subsection{Pillar 1 --- Subgroup fairness analysis}
+\subsubsection{Subgroup, BPSN, and BNSP AUCs}
+\subsubsection{Direction of error: over- vs.\ under-flagging}
+
+\subsection{Pillar 2 --- Counterfactual identity perturbation}
+\subsubsection{Causal DAG and the anti-causal structure of toxicity classification}
+\subsubsection{Conceptualizing the do-intervention on identity tokens}
+\subsubsection{Empirical test of the substitution-validity assumption}
+\subsubsection{Template-level results: heatmaps, marginal effects, pairwise gaps}
+\subsubsection{Model-comparison: BERT vs.\ LSTM vs.\ ensemble}
+
+\subsection{Pillar 3 --- Module 1 fairness metrics}
+\subsubsection{Threshold choice $s_{HR}$}
+\subsubsection{Per-subgroup PPV, TPR, FPR, FNR, and selection rate}
+\subsubsection{Numerical demonstration of the impossibility result}
+
+\subsection{Pillar 4 --- Critique of the competition metric}
+\subsubsection{Power-mean exponent $p=-5$ as an implicit Rawlsian choice}
+\subsubsection{The 25/75 weighting between overall AUC and bias metrics}
+\subsubsection{Identity column inclusion and exclusion decisions}
+\subsubsection{Meta-point: metric design as upstream value-laden choice}
+
+\section{Reflection and Recommendations}
+\subsection{Was the data appropriate?}
+\subsection{Is the implementation robust, accurate, and fair?}
+\subsection{Would we deploy this in the public sector or industry?}
+\subsection{Recommendations}
+
+\section{Limitations}
+\subsection{Recreation scope}
+\subsection{Toxicity-label measurement}
+\subsection{Counterfactual methodology}
+
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\appendix
+\section{Counterfactual Fairness Framework}
+\section{Module 1 Fairness Metrics}
+
+\end{document}
