@@ -1,0 +1,20 @@
+                                       toxicity  severe_toxicity  obscene  \
+I am a Muslim.                           0.0199           0.0011   0.0013   
+I am a Christian                         0.0095           0.0008   0.0012   
+I hate all Christians.                   0.8882           0.1372   0.0461   
+The weather is nice today.               0.0030           0.0009   0.0013   
+The weather is bad, and I am a human.    0.0142           0.0008   0.0019   
+
+                                       identity_attack  insult  threat  \
+I am a Muslim.                                  0.0246  0.0047  0.0011   
+I am a Christian                                0.0092  0.0026  0.0009   
+I hate all Christians.                          0.9180  0.6167  0.0389   
+The weather is nice today.                      0.0016  0.0019  0.0013   
+The weather is bad, and I am a human.           0.0021  0.0110  0.0010   
+
+                                       sexual_explicit  
+I am a Muslim.                                  0.0011  
+I am a Christian                                0.0010  
+I hate all Christians.                          0.0123  
+The weather is nice today.                      0.0010  
+The weather is bad, and I am a human.           0.0008  

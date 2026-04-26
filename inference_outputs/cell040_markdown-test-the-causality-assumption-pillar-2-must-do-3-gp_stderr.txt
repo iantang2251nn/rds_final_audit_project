@@ -1,0 +1,7 @@
+GPT2LMHeadModel LOAD REPORT from: gpt2
+Key                  | Status     |  | 
+---------------------+------------+--+-
+h.{0...11}.attn.bias | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED	:can be ignored when loading from different task/architecture; not ok if you expect identical arch.

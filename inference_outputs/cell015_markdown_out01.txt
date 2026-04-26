@@ -1,0 +1,1 @@
+Loading glove.840B.300d.txt: 0it [00:00, ?it/s]

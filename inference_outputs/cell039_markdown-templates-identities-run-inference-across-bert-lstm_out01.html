@@ -1,0 +1,490 @@
+
+  <div id="df-841f2935-1a98-4372-982e-e93998bc31d3" class="colab-df-container">
+    <div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>template</th>
+      <th>identity</th>
+      <th>label</th>
+      <th>sentence</th>
+      <th>ens_toxicity</th>
+      <th>bert_toxicity</th>
+      <th>lstm_toxicity</th>
+      <th>ens_severe_toxicity</th>
+      <th>bert_severe_toxicity</th>
+      <th>lstm_severe_toxicity</th>
+      <th>...</th>
+      <th>lstm_identity_attack</th>
+      <th>ens_insult</th>
+      <th>bert_insult</th>
+      <th>lstm_insult</th>
+      <th>ens_threat</th>
+      <th>bert_threat</th>
+      <th>lstm_threat</th>
+      <th>ens_sexual_explicit</th>
+      <th>bert_sexual_explicit</th>
+      <th>lstm_sexual_explicit</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>I am a {identity}.</td>
+      <td>male</td>
+      <td>neutral</td>
+      <td>I am a male.</td>
+      <td>0.0042</td>
+      <td>0.0039</td>
+      <td>0.0407</td>
+      <td>0.0008</td>
+      <td>0.0007</td>
+      <td>0.0190</td>
+      <td>...</td>
+      <td>0.0217</td>
+      <td>0.0021</td>
+      <td>0.0018</td>
+      <td>0.0320</td>
+      <td>0.0012</td>
+      <td>0.0011</td>
+      <td>0.0205</td>
+      <td>0.0015</td>
+      <td>0.0013</td>
+      <td>0.0216</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>I am a {identity}.</td>
+      <td>female</td>
+      <td>neutral</td>
+      <td>I am a female.</td>
+      <td>0.0059</td>
+      <td>0.0058</td>
+      <td>0.0306</td>
+      <td>0.0009</td>
+      <td>0.0007</td>
+      <td>0.0197</td>
+      <td>...</td>
+      <td>0.0218</td>
+      <td>0.0023</td>
+      <td>0.0022</td>
+      <td>0.0215</td>
+      <td>0.0013</td>
+      <td>0.0011</td>
+      <td>0.0219</td>
+      <td>0.0018</td>
+      <td>0.0017</td>
+      <td>0.0220</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>I am a {identity}.</td>
+      <td>homosexual gay or lesbian</td>
+      <td>neutral</td>
+      <td>I am a homosexual gay or lesbian.</td>
+      <td>0.2028</td>
+      <td>0.2017</td>
+      <td>0.3476</td>
+      <td>0.0102</td>
+      <td>0.0101</td>
+      <td>0.0282</td>
+      <td>...</td>
+      <td>0.3294</td>
+      <td>0.0431</td>
+      <td>0.0426</td>
+      <td>0.1254</td>
+      <td>0.0016</td>
+      <td>0.0015</td>
+      <td>0.0223</td>
+      <td>0.0333</td>
+      <td>0.0333</td>
+      <td>0.0425</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>I am a {identity}.</td>
+      <td>christian</td>
+      <td>neutral</td>
+      <td>I am a christian.</td>
+      <td>0.0096</td>
+      <td>0.0093</td>
+      <td>0.0504</td>
+      <td>0.0009</td>
+      <td>0.0008</td>
+      <td>0.0182</td>
+      <td>...</td>
+      <td>0.0664</td>
+      <td>0.0028</td>
+      <td>0.0027</td>
+      <td>0.0219</td>
+      <td>0.0010</td>
+      <td>0.0009</td>
+      <td>0.0147</td>
+      <td>0.0012</td>
+      <td>0.0011</td>
+      <td>0.0170</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>I am a {identity}.</td>
+      <td>jewish</td>
+      <td>neutral</td>
+      <td>I am a jewish.</td>
+      <td>0.0203</td>
+      <td>0.0202</td>
+      <td>0.0269</td>
+      <td>0.0013</td>
+      <td>0.0012</td>
+      <td>0.0192</td>
+      <td>...</td>
+      <td>0.0198</td>
+      <td>0.0047</td>
+      <td>0.0046</td>
+      <td>0.0189</td>
+      <td>0.0012</td>
+      <td>0.0011</td>
+      <td>0.0206</td>
+      <td>0.0013</td>
+      <td>0.0012</td>
+      <td>0.0214</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>I am a {identity}.</td>
+      <td>muslim</td>
+      <td>neutral</td>
+      <td>I am a muslim.</td>
+      <td>0.0207</td>
+      <td>0.0199</td>
+      <td>0.1432</td>
+      <td>0.0013</td>
+      <td>0.0011</td>
+      <td>0.0201</td>
+      <td>...</td>
+      <td>0.1892</td>
+      <td>0.0050</td>
+      <td>0.0047</td>
+      <td>0.0451</td>
+      <td>0.0011</td>
+      <td>0.0011</td>
+      <td>0.0136</td>
+      <td>0.0012</td>
+      <td>0.0011</td>
+      <td>0.0127</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>I am a {identity}.</td>
+      <td>black</td>
+      <td>neutral</td>
+      <td>I am a black.</td>
+      <td>0.1016</td>
+      <td>0.1009</td>
+      <td>0.1940</td>
+      <td>0.0039</td>
+      <td>0.0038</td>
+      <td>0.0223</td>
+      <td>...</td>
+      <td>0.2259</td>
+      <td>0.0205</td>
+      <td>0.0201</td>
+      <td>0.0650</td>
+      <td>0.0012</td>
+      <td>0.0011</td>
+      <td>0.0138</td>
+      <td>0.0031</td>
+      <td>0.0031</td>
+      <td>0.0149</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>I am a {identity}.</td>
+      <td>white</td>
+      <td>neutral</td>
+      <td>I am a white.</td>
+      <td>0.0422</td>
+      <td>0.0416</td>
+      <td>0.1270</td>
+      <td>0.0018</td>
+      <td>0.0016</td>
+      <td>0.0191</td>
+      <td>...</td>
+      <td>0.1498</td>
+      <td>0.0102</td>
+      <td>0.0100</td>
+      <td>0.0433</td>
+      <td>0.0008</td>
+      <td>0.0008</td>
+      <td>0.0129</td>
+      <td>0.0014</td>
+      <td>0.0013</td>
+      <td>0.0139</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>I am a {identity}.</td>
+      <td>psychiatric or mental illness</td>
+      <td>neutral</td>
+      <td>I am a psychiatric or mental illness.</td>
+      <td>0.1546</td>
+      <td>0.1554</td>
+      <td>0.0376</td>
+      <td>0.0042</td>
+      <td>0.0041</td>
+      <td>0.0193</td>
+      <td>...</td>
+      <td>0.0247</td>
+      <td>0.1290</td>
+      <td>0.1296</td>
+      <td>0.0279</td>
+      <td>0.0019</td>
+      <td>0.0018</td>
+      <td>0.0218</td>
+      <td>0.0029</td>
+      <td>0.0028</td>
+      <td>0.0214</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>I am a {identity}.</td>
+      <td>straight</td>
+      <td>neutral</td>
+      <td>I am a straight.</td>
+      <td>0.0112</td>
+      <td>0.0110</td>
+      <td>0.0285</td>
+      <td>0.0010</td>
+      <td>0.0009</td>
+      <td>0.0193</td>
+      <td>...</td>
+      <td>0.0207</td>
+      <td>0.0058</td>
+      <td>0.0057</td>
+      <td>0.0198</td>
+      <td>0.0009</td>
+      <td>0.0008</td>
+      <td>0.0213</td>
+      <td>0.0018</td>
+      <td>0.0017</td>
+      <td>0.0210</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>I am a {identity}.</td>
+      <td>asian</td>
+      <td>neutral</td>
+      <td>I am a asian.</td>
+      <td>0.0105</td>
+      <td>0.0088</td>
+      <td>0.2469</td>
+      <td>0.0009</td>
+      <td>0.0008</td>
+      <td>0.0151</td>
+      <td>...</td>
+      <td>0.0179</td>
+      <td>0.0043</td>
+      <td>0.0030</td>
+      <td>0.1953</td>
+      <td>0.0012</td>
+      <td>0.0011</td>
+      <td>0.0134</td>
+      <td>0.0009</td>
+      <td>0.0008</td>
+      <td>0.0134</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>I am a {identity}.</td>
+      <td>heterosexual</td>
+      <td>neutral</td>
+      <td>I am a heterosexual.</td>
+      <td>0.0476</td>
+      <td>0.0474</td>
+      <td>0.0770</td>
+      <td>0.0028</td>
+      <td>0.0027</td>
+      <td>0.0179</td>
+      <td>...</td>
+      <td>0.0233</td>
+      <td>0.0092</td>
+      <td>0.0090</td>
+      <td>0.0485</td>
+      <td>0.0012</td>
+      <td>0.0010</td>
+      <td>0.0263</td>
+      <td>0.0204</td>
+      <td>0.0204</td>
+      <td>0.0198</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>I am a {identity} person.</td>
+      <td>male</td>
+      <td>neutral</td>
+      <td>I am a male person.</td>
+      <td>0.0041</td>
+      <td>0.0038</td>
+      <td>0.0529</td>
+      <td>0.0008</td>
+      <td>0.0007</td>
+      <td>0.0187</td>
+      <td>...</td>
+      <td>0.0230</td>
+      <td>0.0022</td>
+      <td>0.0019</td>
+      <td>0.0412</td>
+      <td>0.0012</td>
+      <td>0.0011</td>
+      <td>0.0208</td>
+      <td>0.0014</td>
+      <td>0.0012</td>
+      <td>0.0202</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>I am a {identity} person.</td>
+      <td>female</td>
+      <td>neutral</td>
+      <td>I am a female person.</td>
+      <td>0.0054</td>
+      <td>0.0052</td>
+      <td>0.0371</td>
+      <td>0.0009</td>
+      <td>0.0007</td>
+      <td>0.0200</td>
+      <td>...</td>
+      <td>0.0238</td>
+      <td>0.0023</td>
+      <td>0.0021</td>
+      <td>0.0269</td>
+      <td>0.0012</td>
+      <td>0.0011</td>
+      <td>0.0229</td>
+      <td>0.0016</td>
+      <td>0.0014</td>
+      <td>0.0215</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>I am a {identity} person.</td>
+      <td>homosexual gay or lesbian</td>
+      <td>neutral</td>
+      <td>I am a homosexual gay or lesbian person.</td>
+      <td>0.1975</td>
+      <td>0.1962</td>
+      <td>0.3852</td>
+      <td>0.0100</td>
+      <td>0.0099</td>
+      <td>0.0297</td>
+      <td>...</td>
+      <td>0.3677</td>
+      <td>0.0416</td>
+      <td>0.0408</td>
+      <td>0.1513</td>
+      <td>0.0016</td>
+      <td>0.0014</td>
+      <td>0.0241</td>
+      <td>0.0359</td>
+      <td>0.0359</td>
+      <td>0.0357</td>
+    </tr>
+  </tbody>
+</table>
+<p>15 rows × 25 columns</p>
+</div>
+    <div class="colab-df-buttons">
+      
+  <div class="colab-df-container">
+    <button class="colab-df-convert" onclick="convertToInteractive('df-841f2935-1a98-4372-982e-e93998bc31d3')"
+            title="Convert this dataframe to an interactive table."
+            style="display:none;">
+      
+  <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960">
+    <path d="M120-120v-720h720v720H120Zm60-500h600v-160H180v160Zm220 220h160v-160H400v160Zm0 220h160v-160H400v160ZM180-400h160v-160H180v160Zm440 0h160v-160H620v160ZM180-180h160v-160H180v160Zm440 0h160v-160H620v160Z"/>
+  </svg>
+    </button>
+    
+  <style>
+    .colab-df-container {
+      display:flex;
+      gap: 12px;
+    }
+
+    .colab-df-convert {
+      background-color: #E8F0FE;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      fill: #1967D2;
+      height: 32px;
+      padding: 0 0 0 0;
+      width: 32px;
+    }
+
+    .colab-df-convert:hover {
+      background-color: #E2EBFA;
+      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+      fill: #174EA6;
+    }
+
+    .colab-df-buttons div {
+      margin-bottom: 4px;
+    }
+
+    [theme=dark] .colab-df-convert {
+      background-color: #3B4455;
+      fill: #D2E3FC;
+    }
+
+    [theme=dark] .colab-df-convert:hover {
+      background-color: #434B5C;
+      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+      fill: #FFFFFF;
+    }
+  </style>
+
+    <script>
+      const buttonEl =
+        document.querySelector('#df-841f2935-1a98-4372-982e-e93998bc31d3 button.colab-df-convert');
+      buttonEl.style.display =
+        google.colab.kernel.accessAllowed ? 'block' : 'none';
+
+      async function convertToInteractive(key) {
+        const element = document.querySelector('#df-841f2935-1a98-4372-982e-e93998bc31d3');
+        const dataTable =
+          await google.colab.kernel.invokeFunction('convertToInteractive',
+                                                    [key], {});
+        if (!dataTable) return;
+
+        const docLinkHtml = 'Like what you see? Visit the ' +
+          '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
+          + ' to learn more about interactive tables.';
+        element.innerHTML = '';
+        dataTable['output_type'] = 'display_data';
+        await google.colab.output.renderOutput(dataTable, element);
+        const docLink = document.createElement('div');
+        docLink.innerHTML = docLinkHtml;
+        element.appendChild(docLink);
+      }
+    </script>
+  </div>
+  
+    </div>
+  </div>
+  

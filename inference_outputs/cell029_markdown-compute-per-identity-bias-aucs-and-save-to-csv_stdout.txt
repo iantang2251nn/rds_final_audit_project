@@ -1,0 +1,5 @@
+Final competition score : 0.94464
+  Overall AUC           : 0.97368
+  Mean Subgroup AUC     : 0.90183
+  Mean BPSN AUC         : 0.94762
+  Mean BNSP AUC         : 0.95544

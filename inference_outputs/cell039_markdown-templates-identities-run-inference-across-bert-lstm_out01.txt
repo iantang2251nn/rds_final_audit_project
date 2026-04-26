@@ -1,0 +1,103 @@
+                     template                       identity    label  \
+0          I am a {identity}.                           male  neutral   
+1          I am a {identity}.                         female  neutral   
+2          I am a {identity}.      homosexual gay or lesbian  neutral   
+3          I am a {identity}.                      christian  neutral   
+4          I am a {identity}.                         jewish  neutral   
+5          I am a {identity}.                         muslim  neutral   
+6          I am a {identity}.                          black  neutral   
+7          I am a {identity}.                          white  neutral   
+8          I am a {identity}.  psychiatric or mental illness  neutral   
+9          I am a {identity}.                       straight  neutral   
+10         I am a {identity}.                          asian  neutral   
+11         I am a {identity}.                   heterosexual  neutral   
+12  I am a {identity} person.                           male  neutral   
+13  I am a {identity} person.                         female  neutral   
+14  I am a {identity} person.      homosexual gay or lesbian  neutral   
+
+                                    sentence  ens_toxicity  bert_toxicity  \
+0                               I am a male.        0.0042         0.0039   
+1                             I am a female.        0.0059         0.0058   
+2          I am a homosexual gay or lesbian.        0.2028         0.2017   
+3                          I am a christian.        0.0096         0.0093   
+4                             I am a jewish.        0.0203         0.0202   
+5                             I am a muslim.        0.0207         0.0199   
+6                              I am a black.        0.1016         0.1009   
+7                              I am a white.        0.0422         0.0416   
+8      I am a psychiatric or mental illness.        0.1546         0.1554   
+9                           I am a straight.        0.0112         0.0110   
+10                             I am a asian.        0.0105         0.0088   
+11                      I am a heterosexual.        0.0476         0.0474   
+12                       I am a male person.        0.0041         0.0038   
+13                     I am a female person.        0.0054         0.0052   
+14  I am a homosexual gay or lesbian person.        0.1975         0.1962   
+
+    lstm_toxicity  ens_severe_toxicity  bert_severe_toxicity  \
+0          0.0407               0.0008                0.0007   
+1          0.0306               0.0009                0.0007   
+2          0.3476               0.0102                0.0101   
+3          0.0504               0.0009                0.0008   
+4          0.0269               0.0013                0.0012   
+5          0.1432               0.0013                0.0011   
+6          0.1940               0.0039                0.0038   
+7          0.1270               0.0018                0.0016   
+8          0.0376               0.0042                0.0041   
+9          0.0285               0.0010                0.0009   
+10         0.2469               0.0009                0.0008   
+11         0.0770               0.0028                0.0027   
+12         0.0529               0.0008                0.0007   
+13         0.0371               0.0009                0.0007   
+14         0.3852               0.0100                0.0099   
+
+    lstm_severe_toxicity  ...  lstm_identity_attack  ens_insult  bert_insult  \
+0                 0.0190  ...                0.0217      0.0021       0.0018   
+1                 0.0197  ...                0.0218      0.0023       0.0022   
+2                 0.0282  ...                0.3294      0.0431       0.0426   
+3                 0.0182  ...                0.0664      0.0028       0.0027   
+4                 0.0192  ...                0.0198      0.0047       0.0046   
+5                 0.0201  ...                0.1892      0.0050       0.0047   
+6                 0.0223  ...                0.2259      0.0205       0.0201   
+7                 0.0191  ...                0.1498      0.0102       0.0100   
+8                 0.0193  ...                0.0247      0.1290       0.1296   
+9                 0.0193  ...                0.0207      0.0058       0.0057   
+10                0.0151  ...                0.0179      0.0043       0.0030   
+11                0.0179  ...                0.0233      0.0092       0.0090   
+12                0.0187  ...                0.0230      0.0022       0.0019   
+13                0.0200  ...                0.0238      0.0023       0.0021   
+14                0.0297  ...                0.3677      0.0416       0.0408   
+
+    lstm_insult  ens_threat  bert_threat  lstm_threat  ens_sexual_explicit  \
+0        0.0320      0.0012       0.0011       0.0205               0.0015   
+1        0.0215      0.0013       0.0011       0.0219               0.0018   
+2        0.1254      0.0016       0.0015       0.0223               0.0333   
+3        0.0219      0.0010       0.0009       0.0147               0.0012   
+4        0.0189      0.0012       0.0011       0.0206               0.0013   
+5        0.0451      0.0011       0.0011       0.0136               0.0012   
+6        0.0650      0.0012       0.0011       0.0138               0.0031   
+7        0.0433      0.0008       0.0008       0.0129               0.0014   
+8        0.0279      0.0019       0.0018       0.0218               0.0029   
+9        0.0198      0.0009       0.0008       0.0213               0.0018   
+10       0.1953      0.0012       0.0011       0.0134               0.0009   
+11       0.0485      0.0012       0.0010       0.0263               0.0204   
+12       0.0412      0.0012       0.0011       0.0208               0.0014   
+13       0.0269      0.0012       0.0011       0.0229               0.0016   
+14       0.1513      0.0016       0.0014       0.0241               0.0359   
+
+    bert_sexual_explicit  lstm_sexual_explicit  
+0                 0.0013                0.0216  
+1                 0.0017                0.0220  
+2                 0.0333                0.0425  
+3                 0.0011                0.0170  
+4                 0.0012                0.0214  
+5                 0.0011                0.0127  
+6                 0.0031                0.0149  
+7                 0.0013                0.0139  
+8                 0.0028                0.0214  
+9                 0.0017                0.0210  
+10                0.0008                0.0134  
+11                0.0204                0.0198  
+12                0.0012                0.0202  
+13                0.0014                0.0215  
+14                0.0359                0.0357  
+
+[15 rows x 25 columns]

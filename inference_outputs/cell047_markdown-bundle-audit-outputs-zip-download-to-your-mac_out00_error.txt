@@ -1,0 +1,17 @@
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mFileNotFoundError[0m                         Traceback (most recent call last)
+[0;32m/tmp/ipykernel_4133/1197688822.py[0m in [0;36m<cell line: 0>[0;34m()[0m
+[1;32m     11[0m    [0mshutil[0m[0;34m.[0m[0mcopytree[0m[0;34m([0m[0mOUT_DIR[0m[0;34m,[0m [0mLOCAL_DIR[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m     12[0m [0;34m[0m[0m
+[0;32m---> 13[0;31m [0mshutil[0m[0;34m.[0m[0mmake_archive[0m[0;34m([0m[0mZIP_BASE[0m[0;34m,[0m [0;34m'zip'[0m[0;34m,[0m [0mLOCAL_DIR[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m     14[0m [0mzip_path[0m [0;34m=[0m [0mPath[0m[0;34m([0m[0mZIP_BASE[0m [0;34m+[0m [0;34m'.zip'[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m     15[0m [0;34m[0m[0m
+
+[0;32m/usr/lib/python3.12/shutil.py[0m in [0;36mmake_archive[0;34m(base_name, format, root_dir, base_dir, verbose, dry_run, owner, group, logger)[0m
+[1;32m   1142[0m     [0msave_cwd[0m [0;34m=[0m [0;32mNone[0m[0;34m[0m[0;34m[0m[0m
+[1;32m   1143[0m     [0;32mif[0m [0mroot_dir[0m [0;32mis[0m [0;32mnot[0m [0;32mNone[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[0;32m-> 1144[0;31m         [0mstmd[0m [0;34m=[0m [0mos[0m[0;34m.[0m[0mstat[0m[0;34m([0m[0mroot_dir[0m[0;34m)[0m[0;34m.[0m[0mst_mode[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m   1145[0m         [0;32mif[0m [0;32mnot[0m [0mstat[0m[0;34m.[0m[0mS_ISDIR[0m[0;34m([0m[0mstmd[0m[0;34m)[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[1;32m   1146[0m             [0;32mraise[0m [0mNotADirectoryError[0m[0;34m([0m[0merrno[0m[0;34m.[0m[0mENOTDIR[0m[0;34m,[0m [0;34m'Not a directory'[0m[0;34m,[0m [0mroot_dir[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+
+[0;31mFileNotFoundError[0m: [Errno 2] No such file or directory: '/content/audit_outputs'

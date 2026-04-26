@@ -1,0 +1,20 @@
+GPT-2 perplexity computed for 120 substitutions.
+Mean PPL: 110.0   Median: 84.5
+Top-decile threshold: PPL >= 214.9  ->  12 flagged sentences
+
+Identities ranked by mean PPL (high = identity swap more often produces awkward text):
+identity
+psychiatric or mental illness   158.6000
+heterosexual                    136.5000
+asian                           117.1000
+male                            116.3000
+female                          114.5000
+homosexual gay or lesbian       112.1000
+straight                        110.6000
+muslim                          103.5000
+christian                       102.6000
+jewish                           94.1000
+white                            77.7000
+black                            76.3000
+
+Top 15 most-suspect substitutions:

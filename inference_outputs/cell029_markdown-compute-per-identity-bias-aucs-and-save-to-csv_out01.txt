@@ -1,0 +1,10 @@
+                        identity  subgroup_n  subgroup_auc  bpsn_auc  bnsp_auc
+0                           male        2112        0.9367    0.9621    0.9592
+1                         female        2602        0.9418    0.9722    0.9515
+2      homosexual_gay_or_lesbian         538        0.8541    0.9298    0.9504
+3                      christian        2109        0.9475    0.9761    0.9471
+4                         jewish         411        0.9098    0.9541    0.9518
+5                         muslim        1054        0.8723    0.9424    0.9489
+6                          black         761        0.8670    0.9258    0.9573
+7                          white        1178        0.8738    0.9243    0.9593
+8  psychiatric_or_mental_illness         238        0.9560    0.9514    0.9753

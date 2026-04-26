@@ -1,0 +1,1 @@
+Score sensitivity to power-mean exponent p (more negative = harsher punishment of worst subgroup):

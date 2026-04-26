@@ -1,0 +1,13 @@
+# OS / editor
+.DS_Store
+.vscode/
+.claude/
+
+# Local working dir with model weights / large reference data (3.6 GB)
+bullshit/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.ipynb_checkpoints/

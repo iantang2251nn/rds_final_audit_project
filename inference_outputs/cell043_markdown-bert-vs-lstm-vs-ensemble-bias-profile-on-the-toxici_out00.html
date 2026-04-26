@@ -1,0 +1,189 @@
+
+  <div id="df-e2e95d2f-e5ba-42bc-a8e5-34a01eca02d2" class="colab-df-container">
+    <div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>bert_toxicity</th>
+      <th>lstm_toxicity</th>
+      <th>ens_toxicity</th>
+    </tr>
+    <tr>
+      <th>identity</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>male</th>
+      <td>0.0095</td>
+      <td>0.0595</td>
+      <td>0.0098</td>
+    </tr>
+    <tr>
+      <th>female</th>
+      <td>0.0102</td>
+      <td>0.0431</td>
+      <td>0.0104</td>
+    </tr>
+    <tr>
+      <th>homosexual gay or lesbian</th>
+      <td>0.4351</td>
+      <td>0.3573</td>
+      <td>0.4346</td>
+    </tr>
+    <tr>
+      <th>christian</th>
+      <td>0.0106</td>
+      <td>0.0692</td>
+      <td>0.0110</td>
+    </tr>
+    <tr>
+      <th>jewish</th>
+      <td>0.0264</td>
+      <td>0.0336</td>
+      <td>0.0264</td>
+    </tr>
+    <tr>
+      <th>muslim</th>
+      <td>0.0303</td>
+      <td>0.1833</td>
+      <td>0.0314</td>
+    </tr>
+    <tr>
+      <th>black</th>
+      <td>0.2964</td>
+      <td>0.3261</td>
+      <td>0.2967</td>
+    </tr>
+    <tr>
+      <th>white</th>
+      <td>0.0704</td>
+      <td>0.2099</td>
+      <td>0.0714</td>
+    </tr>
+    <tr>
+      <th>psychiatric or mental illness</th>
+      <td>0.3352</td>
+      <td>0.0481</td>
+      <td>0.3332</td>
+    </tr>
+    <tr>
+      <th>straight</th>
+      <td>0.0219</td>
+      <td>0.0416</td>
+      <td>0.0221</td>
+    </tr>
+    <tr>
+      <th>asian</th>
+      <td>0.0124</td>
+      <td>0.3504</td>
+      <td>0.0147</td>
+    </tr>
+    <tr>
+      <th>heterosexual</th>
+      <td>0.0985</td>
+      <td>0.1246</td>
+      <td>0.0987</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+    <div class="colab-df-buttons">
+      
+  <div class="colab-df-container">
+    <button class="colab-df-convert" onclick="convertToInteractive('df-e2e95d2f-e5ba-42bc-a8e5-34a01eca02d2')"
+            title="Convert this dataframe to an interactive table."
+            style="display:none;">
+      
+  <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960">
+    <path d="M120-120v-720h720v720H120Zm60-500h600v-160H180v160Zm220 220h160v-160H400v160Zm0 220h160v-160H400v160ZM180-400h160v-160H180v160Zm440 0h160v-160H620v160ZM180-180h160v-160H180v160Zm440 0h160v-160H620v160Z"/>
+  </svg>
+    </button>
+    
+  <style>
+    .colab-df-container {
+      display:flex;
+      gap: 12px;
+    }
+
+    .colab-df-convert {
+      background-color: #E8F0FE;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      fill: #1967D2;
+      height: 32px;
+      padding: 0 0 0 0;
+      width: 32px;
+    }
+
+    .colab-df-convert:hover {
+      background-color: #E2EBFA;
+      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+      fill: #174EA6;
+    }
+
+    .colab-df-buttons div {
+      margin-bottom: 4px;
+    }
+
+    [theme=dark] .colab-df-convert {
+      background-color: #3B4455;
+      fill: #D2E3FC;
+    }
+
+    [theme=dark] .colab-df-convert:hover {
+      background-color: #434B5C;
+      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+      fill: #FFFFFF;
+    }
+  </style>
+
+    <script>
+      const buttonEl =
+        document.querySelector('#df-e2e95d2f-e5ba-42bc-a8e5-34a01eca02d2 button.colab-df-convert');
+      buttonEl.style.display =
+        google.colab.kernel.accessAllowed ? 'block' : 'none';
+
+      async function convertToInteractive(key) {
+        const element = document.querySelector('#df-e2e95d2f-e5ba-42bc-a8e5-34a01eca02d2');
+        const dataTable =
+          await google.colab.kernel.invokeFunction('convertToInteractive',
+                                                    [key], {});
+        if (!dataTable) return;
+
+        const docLinkHtml = 'Like what you see? Visit the ' +
+          '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
+          + ' to learn more about interactive tables.';
+        element.innerHTML = '';
+        dataTable['output_type'] = 'display_data';
+        await google.colab.output.renderOutput(dataTable, element);
+        const docLink = document.createElement('div');
+        docLink.innerHTML = docLinkHtml;
+        element.appendChild(docLink);
+      }
+    </script>
+  </div>
+  
+    </div>
+  </div>
+  

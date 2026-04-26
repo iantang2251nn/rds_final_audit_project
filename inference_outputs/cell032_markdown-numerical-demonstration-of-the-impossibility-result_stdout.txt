@@ -1,0 +1,22 @@
+Per-subgroup base rates P(Y=1 | identity):
+  male                                base_rate=0.1515
+  female                              base_rate=0.1345
+  homosexual_gay_or_lesbian           base_rate=0.2862
+  christian                           base_rate=0.0996
+  jewish                              base_rate=0.1655
+  muslim                              base_rate=0.2211
+  black                               base_rate=0.3233
+  white                               base_rate=0.2997
+  psychiatric_or_mental_illness       base_rate=0.2269
+  OVERALL                             base_rate=0.0799
+
+Chouldechova identity check (derived FPR vs measured FPR):
+  male                                measured=0.0290  derived=0.0290
+  female                              measured=0.0147  derived=0.0147
+  homosexual_gay_or_lesbian           measured=0.0417  derived=0.0417
+  christian                           measured=0.0121  derived=0.0121
+  jewish                              measured=0.0321  derived=0.0321
+  muslim                              measured=0.0353  derived=0.0353
+  black                               measured=0.0524  derived=0.0524
+  white                               measured=0.0473  derived=0.0473
+  psychiatric_or_mental_illness       measured=0.0598  derived=0.0598
