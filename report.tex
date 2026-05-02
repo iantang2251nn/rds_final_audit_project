@@ -44,9 +44,20 @@ The toxicity label we audit against is itself the product of a measurement choic
 
 % rubric §3: pre-processing, implementation, validation
 \section{Implementation and Validation}
+
 \subsection{Recreation scope and deviations from the original}
+
+The original third-place solution was an F.H.S.D.Y.\ five-component ensemble combining several transformer- and recurrent-architecture variants together with a fine-tuned GPT-2 perplexity head. Recreating the full ensemble was infeasible within this project's compute budget; we therefore reproduced two of its components---\texttt{bert-large-uncased} fine-tuned for the competition's seven-way multi-task head, and a four-fold-averaged LSTM--GRU model with the same multi-task head structure---and combined them with Optuna-tuned blend weights. The fairness implication of this scoping is non-trivial. An ensemble whose structural diversity is reduced may encode a single component's inductive bias more sharply than the original; conversely, biases that the original ensemble averaged out across components may surface more visibly here. We return to this point in \S5.3.1 when comparing the BERT, LSTM, and ensemble bias profiles directly, and again in \S6.4 when discussing what additional auditing the missing components would have warranted.
+
 \subsection{Architecture: BERT-large-uncased + LSTM-GRU multi-task ensemble}
+
+\texttt{bert-large-uncased} is the standard 24-layer, 1024-hidden, 16-attention-head transformer with $\sim$340M parameters; the recreation feeds its pooled output to seven linear heads (one toxicity head plus six subtype heads) and fine-tunes them jointly. The LSTM--GRU component is a recurrent sequence model with the same seven-head output structure, trained as a four-fold cross-validation ensemble whose per-fold scores are averaged at inference. Both models inherit Civil Comments' tokenization and preprocessing as distributed by Jigsaw, with no project-specific cleaning beyond what the original recipe specifies. The two models are trained independently; only their per-comment scores are combined at inference time, which is what makes the blend weights below interpretable as relative trust placed on each component for the final score.
+
 \subsection{Validation: Optuna blend and competition-format reproduction}
+
+The blended ensemble's per-comment toxicity score is the Optuna-tuned weighted mean of the BERT and LSTM scores. The optimizer returned blend weights of $(\,\text{BERT}: 0.993,\; \text{LSTM}: 0.007\,)$ on the validation fold, meaning that under the competition's bias-aware loss the LSTM contributes near-negligibly when BERT is available. We retain the LSTM in the audit nonetheless, because its standalone bias profile differs from BERT's in ways that are analytically informative even when its blend weight is small (\S5.3.1).
+
+On the private test set ($n = 97{,}320$), the recreated ensemble reproduces the competition's bias-aware score at~$0.94464$, with component AUCs of $0.97368$ (Overall), $0.90183$ (mean Subgroup), $0.94762$ (mean BPSN), and $0.95544$ (mean BNSP). These numbers anchor the rest of the audit: subsequent fairness gaps are read against a model that is, on the competition's own measure of performance, faithful to the third-place submission's behavior.
 
 % rubric §4: (a) accuracy, (b) fairness, (c) additional methods
 \section{Outcomes}
