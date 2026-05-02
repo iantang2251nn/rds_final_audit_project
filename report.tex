@@ -177,10 +177,34 @@ where $M_p$ is the generalized power mean over the per-identity bias AUCs, and t
 
 % rubric §5: reflection prompts a-d
 \section{Summary}
+
 \subsection{Was the data appropriate?}
+
+Civil Comments is operationally usable but rests on a contested measurement: toxicity is a fraction-of-rater agreement, binarized at $0.5$, on a rater pool that is not demographically balanced to the populations the labels concern (\S3.3). The dataset's identity-coverage spans twenty-four columns, but the bias-aware metric we audit against evaluates only nine of them (\S5.3.2). We accept the data as appropriate for the audit's narrow goal of reproducing and stress-testing the third-place solution, but emphasize that every fairness conclusion below inherits the upstream measurement choice: a different aggregation rule or a demographically rebalanced rater pool could move some of the gaps reported here materially.
+
 \subsection{Robustness, accuracy, and fairness assessment}
+
+The implementation is accurate on the metric the competition rewarded (Overall AUC $0.97368$, final score $0.94464$). It is not robust or fair at any stakeholder-grounded reading of group fairness we tested. Pillar~1 flags five over-flag and two under-flag identities, with error-direction falling on disjoint groups (\S5.1). Pillar~3 confirms substantial dispersion in PPV ($[0.73, 0.84]$), FPR ($[0.012, 0.060]$), and selection rate (\S5.2), and Chouldechova's identity makes simultaneous predictive parity and error-rate balance impossible at the observed base rates---forcing a stakeholder choice the developers made implicitly through their training objective. Pillar~2's counterfactual gaps fall on the same identities Pillar~1 flagged, providing independent corroboration that the bias is real rather than a test-set artifact.
+
+We privilege the commenter as the stakeholder of greatest concern: false-positive silencing of identity-mentioning speech is concentrated on minority sexual orientations, racial groups, and mental-health mentions (\S5.1), so error-rate balance is the fairness condition whose violation we treat as most consequential. Under that anchor, the implementation is unfair: FPR varies fivefold across the nine evaluated identities at $s_{HR} = 0.5$.
+
 \subsection{Public-sector or industry deployment?}
+
+The two contexts diverge.
+
+\paragraph{Public sector.} No. The differential silencing of identity-mentioning speech (\S5.1, \S6.2) raises concerns under both First-Amendment-style speech protection and disparate-impact analysis. The toxicity label's measurement choice---whose toxicity, rated by whom---is also incompatible with the neutrality typically demanded of government speech regulation.
+
+\paragraph{Industry, private-platform moderation.} With guardrails, perhaps. A defensible deployment would require, at minimum: (a) stakeholder-aware threshold tuning per identity-error-direction rather than a single $s_{HR}$; (b) continuous monitoring of disparate impact across the full twenty-four identity columns, not the nine the metric evaluates; (c) auditing of the rater pool's demographic composition relative to the user population; (d) a public model card \citep{mitchell2019model} and dataset/model nutrition label \citep{stoyanovich2019nutritional} documenting the metric's value choices and the impossibility-result trade-off. Without these, the system as audited is closer to a research artifact than a deployment-ready ADS.
+
 \subsection{Recommendations}
+
+\paragraph{Data collection.} Retain rater-level demographics so labels can be disaggregated by annotator identity; the current aggregate fraction collapses information needed to evaluate whose toxicity standard the system enacts (\S3.3).
+
+\paragraph{Data processing.} Report downstream metrics at multiple thresholds (e.g., $0.25, 0.5, 0.75$) rather than one, to make threshold-sensitive findings visible. The current convention of binarizing at $0.5$ embeds a majoritarian decision rule that minority readings of toxicity cannot push back against.
+
+\paragraph{Methodology.} Expand the per-identity evaluation beyond the nine sample-size-cutoff columns to all twenty-four, with explicit confidence bounds reported alongside smaller-sample identities (\S5.3.2). Augment the bias-aware AUC objective with a Module~1 metric (e.g., per-group PPV variance, FPR variance) at training time, so the developers do not inherit the competition metric's normative choices unexamined \citep{raji2020closing}. Run counterfactual substitution tests, with the GPT-2 perplexity filter of \S5.3.1, as part of validation rather than as a post-hoc audit.
+
+\paragraph{Ensemble design.} If structural diversity is the fairness mechanism the original FHSDY ensemble exploited, restoring its missing components should precede further blend-weight tuning. The BERT-dominated blend audited here ($w_{\text{BERT}} = 0.993$, \S4.3) may amplify a single component's inductive bias rather than averaging across components, as Pillar~2's BERT-vs-LSTM divergence suggests.
 
 % rubric §6
 \section{Project Contributions}
