@@ -102,6 +102,13 @@ psychiatric or mental illness &  238 & 0.9560 & 0.9514 & 0.9753 \\
 \label{tab:bias-aucs}
 \end{table}
 
+\begin{figure}[ht]
+\centering
+\includegraphics[width=\linewidth]{inference_outputs/cell034_markdown-a-grouped-bar-chart-of-the-3-bias-aucs-per-identity_out00.png}
+\caption{Visual rendering of Table~\ref{tab:bias-aucs}: Subgroup, BPSN, and BNSP AUCs per evaluated identity. Low BPSN on \texttt{black} and \texttt{white} (race-mention over-flagging) and low BNSP on \texttt{christian} and \texttt{muslim} (under-flagging of toxicity targeting those groups) drive the direction-of-error split discussed below.}
+\label{fig:bias-auc-bars}
+\end{figure}
+
 Three asymmetries in Table~\ref{tab:bias-aucs} matter for the audit. First, the worst Subgroup AUCs cluster on identities with strong spurious training-time correlations to toxic examples: \texttt{homosexual\_gay\_or\_lesbian} ($0.854$), \texttt{black} ($0.867$), \texttt{muslim} ($0.872$), and \texttt{white} ($0.874$). Second, BPSN ranks \texttt{black} and \texttt{white} lowest ($0.926$ and $0.924$), the canonical ``race-mention is toxicity-adjacent'' pattern. Third, BNSP ranks \texttt{christian} and \texttt{muslim} lowest ($0.947$ and $0.949$), indicating that toxicity \emph{targeting} those groups is harder for the model to separate from non-toxic background.
 
 Combining BPSN and BNSP gives a direction of error per identity (full classification in \texttt{derived\_direction\_of\_error.md}). Five identities are over-flagged: \texttt{white}, \texttt{black}, \texttt{psychiatric\_or\_mental\_illness}, \texttt{homosexual\_gay\_or\_lesbian}, \texttt{muslim}. Two are under-flagged: \texttt{christian}, \texttt{female}. The over- and under-flagged groups are disjoint, which sets up the stakeholder asymmetry we develop in \S5.2: false-positive harms (silencing of identity mentions) and false-negative harms (toleration of targeted toxicity) accrue to different communities, and a single fairness metric cannot remediate both directions simultaneously.
@@ -134,6 +141,13 @@ psychiatric or mental illness &   238 & 0.2269 & 0.2059 & 0.7755 & 0.7037 & 0.05
 \caption{Per-subgroup confusion-matrix metrics at $s_{HR} = 0.5$. The competition's bias-aware metric does not directly enforce predictive parity (equal PPV) or error-rate balance (equal FPR and FNR) across groups; this table makes the resulting violations visible. Source: \texttt{inference\_outputs/cell031}.}
 \label{tab:module1-metrics}
 \end{table}
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=\linewidth]{inference_outputs/cell036_markdown-c-module-1-fairness-metrics-per-identity_out00.png}
+\caption{Per-identity Module~1 fairness metrics (PPV, TPR, FPR, FNR, selection rate) at $s_{HR} = 0.5$. The visual companion to Table~\ref{tab:module1-metrics}: PPV variation across groups (predictive-parity violation) and FPR/FNR variation (error-rate-balance violation) are the two patterns the impossibility result of \S5.2 makes algebraically inevitable given the base-rate spread of \S3.1.}
+\label{fig:module1-bars}
+\end{figure}
 
 \paragraph{Numerical demonstration of the trade-off.} Take OVERALL PPV ($0.6873$) as a notional predictive-parity target and ask, for each subgroup, what FPR would the model need to satisfy that target given its measured base rate and FNR? Holding base rate and FNR fixed and applying Chouldechova's identity yields a required FPR that ranges from $0.020$ (\texttt{christian}) to $0.100$ (\texttt{black})---a $4.9\times$ ratio. Conversely, taking OVERALL FPR ($0.0291$) as an error-rate-balance target forces required PPV to span $[0.606, 0.883]$---a $0.28$ absolute spread. Either way, the trade-off between the two normative readings is substantial in this dataset, not a merely formal incompatibility (full computation in \texttt{derived\_impossibility\_demo.md}).
 
@@ -171,6 +185,13 @@ Counterfactual fairness \citep{kusner2017counterfactual} and the but-for-causati
 
 \paragraph{Counterfactual gaps.} The full template$\times$identity heatmaps, identity marginal effects, and pairwise gap matrices live in \texttt{inference\_outputs/cell04\{0,1,2,3\}}. Two findings carry analytical weight. First, on neutral templates such as ``I am a [identity]'', the largest counterfactual scores fall on \texttt{black}, \texttt{homosexual\_gay\_or\_lesbian}, \texttt{psychiatric\_or\_mental\_illness}, \texttt{muslim}, and \texttt{white}---exactly the identities the Pillar~1 BPSN analysis flagged as over-flagged (\S5.1). Counterfactual robustness is therefore not independent evidence of bias; it is the same bias measured under a different test, which strengthens the conclusion that the bias is real rather than an artifact of test-set composition. Second, the BERT and LSTM components have visibly different bias profiles per identity (\texttt{cell042}/\texttt{cell043}). On the toxicity head with neutral templates, \texttt{psychiatric\_or\_mental\_illness} is heavily over-flagged by BERT (mean $0.335$) and lightly by LSTM ($0.048$); \texttt{asian} is heavily over-flagged by LSTM ($0.350$) and lightly by BERT ($0.012$). The Optuna blend (\S4.3) places near-all weight on BERT, so the ensemble tracks BERT's bias profile rather than averaging the two. A different blend---or an Optuna run with a fairness-aware objective---would produce a meaningfully different ensemble bias signature, a point we revisit in \S6.4.
 
+\begin{figure}[ht]
+\centering
+\includegraphics[width=\linewidth]{inference_outputs/cell041_markdown-heatmap-per-subtype-head-neutral-templates-only-whe_out00.png}
+\caption{Counterfactual scores per identity ($x$-axis) and prediction head ($y$-axis), restricted to neutral templates ("I am a [identity]", "My friend is [identity]", etc.). Brighter cells indicate higher predicted toxicity-related probability for benign identity mentions. The pattern that \texttt{black}, \texttt{homosexual\_gay\_or\_lesbian}, \texttt{psychiatric\_or\_mental\_illness}, \texttt{muslim}, and \texttt{white} draw the largest scores corroborates the BPSN over-flag finding of \S5.1 under a different test.}
+\label{fig:counterfactual-heatmap}
+\end{figure}
+
 \subsubsection{Critique of the competition metric}
 
 The bias-aware score the competition rewarded combines an Overall AUC on the full test set with a per-identity bias component,
@@ -179,7 +200,14 @@ The bias-aware score the competition rewarded combines an Overall AUC on the ful
 \]
 where $M_p$ is the generalized power mean over the per-identity bias AUCs, and the competition fixed $w_{\mathrm{overall}} = 0.25$ and $p = -5$. Each constant encodes a distinct normative claim.
 
-\paragraph{Power mean $p = -5$ as Rawlsian commitment.} As $p \to -\infty$, $M_p$ collapses toward the worst-performing subgroup, so the choice $p = -5$ embeds a Rawlsian commitment to the worst-off identity group: the metric rewards lifting the floor far more than lifting the average. Empirically, however, the bite of this choice is mild on the model we audit. Our sensitivity sweep (\texttt{cell044}: $p \in \{1, 0.5, -1, -3, -5, -8, -15\}$) moves the final score by only $\sim 0.004$ across the realistic range of $p$. The Rawlsian framing is morally substantive but its quantitative pressure here is small, because the per-identity bias AUCs already lie in a tight band.
+\paragraph{Power mean $p = -5$ as Rawlsian commitment.} As $p \to -\infty$, $M_p$ collapses toward the worst-performing subgroup, so the choice $p = -5$ embeds a Rawlsian commitment to the worst-off identity group: the metric rewards lifting the floor far more than lifting the average. Empirically, however, the bite of this choice is mild on the model we audit. Our sensitivity sweep (Figure~\ref{fig:power-mean-sensitivity}; $p \in \{1, 0.5, -1, -3, -5, -8, -15\}$) moves the final score by only $\sim 0.004$ across the realistic range of $p$. The Rawlsian framing is morally substantive but its quantitative pressure here is small, because the per-identity bias AUCs already lie in a tight band.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.75\linewidth]{inference_outputs/cell044_markdown-sensitivity-of-the-score-to-the-power-mean-exponent_out02.png}
+\caption{Sensitivity of the competition's final score to the power-mean exponent $p$. The competition's choice of $p = -5$ is marked; sweeping $p$ from $1$ (arithmetic mean) to $-15$ (heavily Rawlsian) moves the final score by only $\sim 0.004$, indicating that the Rawlsian framing is morally substantive but quantitatively mild on this model.}
+\label{fig:power-mean-sensitivity}
+\end{figure}
 
 \paragraph{The 25/75 weighting.} The choice $w_{\mathrm{overall}} = 0.25$ is, by contrast, heavily binding. Sweeping $w_{\mathrm{overall}}$ from $0$ to $1$ (\texttt{cell045}/\texttt{cell046}) moves the final score from $0.9350$ (all-bias) to $0.9737$ (all-overall-AUC)---a $0.04$ swing. At the chosen $0.25$, the bias component does roughly three-quarters of the work in pulling the model's headline number down from its Overall AUC. A different weighting, even $0.5$, would have produced a different leaderboard and a structurally different ``winning'' solution.
 
