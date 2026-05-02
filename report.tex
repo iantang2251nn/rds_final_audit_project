@@ -18,64 +18,42 @@
 \begin{abstract}
 \end{abstract}
 
+% rubric §1: ADS overview, stated goals, trade-offs between goals
 \section{Introduction}
 
 \section{Background}
-\subsection{The Civil Comments dataset and Jigsaw competition}
-\subsection{The 3rd-place solution under audit}
-\subsection{Normative framing: fairness as the spine of the audit}
 
-\section{Input Data Profiling}
-\subsection{Dataset composition}
-\subsection{Identity-subgroup coverage and base rates}
-\subsection{Critique of the toxicity-score definition}
+% rubric §2: input feature profiling, output interpretation
+\section{Input and Output}
+\subsection{Civil Comments and identity-subgroup coverage}
+\subsection{Output: toxicity score and thresholding}
+\subsection{The toxicity label as a measurement choice}
 
-\section{The ADS Implementation}
+% rubric §3: pre-processing, implementation, validation
+\section{Implementation and Validation}
 \subsection{Recreation scope and deviations from the original}
-\subsection{Architecture: BERT-large + LSTM-GRU multi-task ensemble}
-\subsection{Training and Optuna-blended weights}
+\subsection{Architecture: BERT-large-uncased + LSTM-GRU multi-task ensemble}
+\subsection{Validation: Optuna blend and competition-format reproduction}
 
-\section{Stakeholder Analysis}
+% rubric §4: (a) accuracy, (b) fairness, (c) additional methods
+\section{Outcomes}
+\subsection{Accuracy across subpopulations}
+\subsection{Fairness analysis with stakeholder-anchored metric choice}
+\subsection{Additional audit methods}
+\subsubsection{Counterfactual robustness}
+\subsubsection{Critique of the competition metric}
 
-\section{Audit Outcomes}
-\subsection{Pillar 1 --- Subgroup fairness analysis}
-\subsubsection{Subgroup, BPSN, and BNSP AUCs}
-\subsubsection{Direction of error: over- vs.\ under-flagging}
-
-\subsection{Pillar 2 --- Counterfactual identity perturbation}
-\subsubsection{Causal DAG and the anti-causal structure of toxicity classification}
-\subsubsection{Conceptualizing the do-intervention on identity tokens}
-\subsubsection{Empirical test of the substitution-validity assumption}
-\subsubsection{Template-level results: heatmaps, marginal effects, pairwise gaps}
-\subsubsection{Model-comparison: BERT vs.\ LSTM vs.\ ensemble}
-
-\subsection{Pillar 3 --- Module 1 fairness metrics}
-\subsubsection{Threshold choice $s_{HR}$}
-\subsubsection{Per-subgroup PPV, TPR, FPR, FNR, and selection rate}
-\subsubsection{Numerical demonstration of the impossibility result}
-
-\subsection{Pillar 4 --- Critique of the competition metric}
-\subsubsection{Power-mean exponent $p=-5$ as an implicit Rawlsian choice}
-\subsubsection{The 25/75 weighting between overall AUC and bias metrics}
-\subsubsection{Identity column inclusion and exclusion decisions}
-\subsubsection{Meta-point: metric design as upstream value-laden choice}
-
-\section{Reflection and Recommendations}
+% rubric §5: reflection prompts a-d
+\section{Summary}
 \subsection{Was the data appropriate?}
-\subsection{Is the implementation robust, accurate, and fair?}
-\subsection{Would we deploy this in the public sector or industry?}
+\subsection{Robustness, accuracy, and fairness assessment}
+\subsection{Public-sector or industry deployment?}
 \subsection{Recommendations}
 
-\section{Limitations}
-\subsection{Recreation scope}
-\subsection{Toxicity-label measurement}
-\subsection{Counterfactual methodology}
+% rubric §6
+\section{Project Contributions}
 
 \bibliographystyle{plainnat}
 \bibliography{references}
-
-\appendix
-\section{Counterfactual Fairness Framework}
-\section{Module 1 Fairness Metrics}
 
 \end{document}
