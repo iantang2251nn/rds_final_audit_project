@@ -1,6 +1,6 @@
 \documentclass[11pt]{article}
 
-\usepackage[margin=1in]{geometry}
+\usepackage[margin=0.85in]{geometry}
 \usepackage{amsmath, amssymb}
 \usepackage{graphicx}
 \usepackage{booktabs}
@@ -41,11 +41,11 @@ The system audited here is reproduced from sakami0000's publicly available code 
 
 \subsection{Civil Comments and identity-subgroup coverage}
 
-The system audited here is the third-place solution to the 2019 Jigsaw \emph{Unintended Bias in Toxicity Classification} Kaggle competition \citep{borkan2019nuanced}, trained on the public release of the Civil Comments corpus. Civil Comments operated as a third-party comment-hosting platform for English-language news sites between 2015 and 2017; the public dataset contains approximately 1.8M comments collected when the platform shut down. The audit runs on the private test set ($n = 97{,}320$).
+The audit runs on the private test set of the Civil Comments corpus ($n = 97{,}320$), released by Jigsaw alongside the 2019 Kaggle competition under audit \citep{borkan2019nuanced}. Civil Comments operated as a third-party comment-hosting platform for English-language news sites between 2015 and 2017; the public release contains approximately $1.8$M comments collected when the platform shut down.
 
-Each comment was annotated by crowd workers along two parallel tracks. The toxicity track records a primary \texttt{toxicity} label and five subtype labels (\texttt{severe\_toxicity}, \texttt{obscene}, \texttt{identity\_attack}, \texttt{insult}, \texttt{threat}, \texttt{sexual\_explicit}), each as the fraction of raters who applied the label. The identity track records twenty-four attributes spanning gender (4 columns), sexual orientation (4), religion (7), race/ethnicity (5), and disability (4), each as the fraction of identity-annotators who marked the identity as referenced. Following Civil Comments convention, an identity is treated as ``mentioned'' when its column value is at least~$0.5$.
+Each comment was annotated along two tracks. The toxicity track records a primary \texttt{toxicity} label and five subtype labels (\texttt{severe\_toxicity}, \texttt{obscene}, \texttt{identity\_attack}, \texttt{insult}, \texttt{threat}, \texttt{sexual\_explicit}), each as the fraction of raters who applied the label. The identity track records twenty-four attributes spanning gender (4), sexual orientation (4), religion (7), race/ethnicity (5), and disability (4), each as the fraction of identity-annotators who marked the identity as referenced. Following Civil Comments convention, an identity is treated as ``mentioned'' when its column value is at least~$0.5$.
 
-At threshold~$0.5$, the nine identities evaluated by the competition's bias-aware metric---\texttt{male}, \texttt{female}, \texttt{homosexual\_gay\_or\_lesbian}, \texttt{christian}, \texttt{jewish}, \texttt{muslim}, \texttt{black}, \texttt{white}, and \texttt{psychiatric\_or\_mental\_illness}---together account for $11{,}003$ mentions. The fifteen identity columns the metric does not evaluate---including \texttt{transgender}, \texttt{bisexual}, \texttt{asian}, \texttt{latino}, \texttt{hindu}, \texttt{buddhist}, \texttt{atheist}, and every disability category other than \texttt{psychiatric\_or\_mental\_illness}---account for $807$ mentions in aggregate. All evaluated subgroups have $n \geq 238$ at this threshold; all excluded subgroups have $n \leq 217$. The selection is therefore sample-size driven, with a cutoff falling between those two values---a fact we return to in \S5.3.2 when interrogating the metric's identity-inclusion choice. Per-group base rates of the toxicity label among evaluated identities span $[0.0996, 0.3233]$ (\texttt{christian} to \texttt{black}), a range whose magnitude becomes binding for the impossibility-result discussion in \S5.2.
+At threshold~$0.5$, the nine identities the bias-aware metric evaluates---\texttt{male}, \texttt{female}, \texttt{homosexual\_gay\_or\_lesbian}, \texttt{christian}, \texttt{jewish}, \texttt{muslim}, \texttt{black}, \texttt{white}, \texttt{psychiatric\_or\_mental\_illness}---together account for $11{,}003$ mentions; the fifteen excluded identities (\texttt{transgender}, \texttt{bisexual}, \texttt{asian}, \texttt{latino}, \texttt{hindu}, \texttt{buddhist}, \texttt{atheist}, every disability category other than \texttt{psychiatric\_or\_mental\_illness}) account for only $807$ in aggregate. All evaluated subgroups have $n \geq 238$ at this threshold; all excluded have $n \leq 217$. The selection is sample-size driven, cutoff between those two values---revisited in \S5.3.2. Per-group base rates among evaluated identities span $[0.0996, 0.3233]$ (\texttt{christian} to \texttt{black}); this range is binding for \S5.2's impossibility result.
 
 \subsection{Output: toxicity score and thresholding}
 
@@ -105,7 +105,7 @@ psychiatric or mental illness &  238 & 0.9560 & 0.9514 & 0.9753 \\
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=\linewidth]{inference_outputs/cell034_markdown-a-grouped-bar-chart-of-the-3-bias-aucs-per-identity_out00.png}
+\includegraphics[width=0.85\linewidth]{inference_outputs/cell034_markdown-a-grouped-bar-chart-of-the-3-bias-aucs-per-identity_out00.png}
 \caption{Visual rendering of Table~\ref{tab:bias-aucs}: Subgroup, BPSN, and BNSP AUCs per evaluated identity. Low BPSN on \texttt{black} and \texttt{white} (race-mention over-flagging) and low BNSP on \texttt{christian} and \texttt{muslim} (under-flagging of toxicity targeting those groups) drive the direction-of-error split discussed below.}
 \label{fig:bias-auc-bars}
 \end{figure}
@@ -123,6 +123,7 @@ We threshold the toxicity score at $s_{HR} = 0.5$. The choice is deliberately co
 \begin{table}[h]
 \centering
 \small
+\setlength{\tabcolsep}{4pt}
 \begin{tabular}{lrrrrrrr}
 \toprule
 Identity & $n$ & base rate & sel.\ rate & PPV & TPR & FPR & FNR \\
@@ -142,13 +143,6 @@ psychiatric or mental illness &   238 & 0.2269 & 0.2059 & 0.7755 & 0.7037 & 0.05
 \caption{Per-subgroup confusion-matrix metrics at $s_{HR} = 0.5$. The competition's bias-aware metric does not directly enforce predictive parity (equal PPV) or error-rate balance (equal FPR and FNR) across groups; this table makes the resulting violations visible. Source: \texttt{inference\_outputs/cell031}.}
 \label{tab:module1-metrics}
 \end{table}
-
-\begin{figure}[ht]
-\centering
-\includegraphics[width=\linewidth]{inference_outputs/cell036_markdown-c-module-1-fairness-metrics-per-identity_out00.png}
-\caption{Per-identity Module~1 fairness metrics (PPV, TPR, FPR, FNR, selection rate) at $s_{HR} = 0.5$. The visual companion to Table~\ref{tab:module1-metrics}: PPV variation across groups (predictive-parity violation) and FPR/FNR variation (error-rate-balance violation) are the two patterns the impossibility result of \S5.2 makes algebraically inevitable given the base-rate spread of \S3.1.}
-\label{fig:module1-bars}
-\end{figure}
 
 \paragraph{Numerical demonstration of the trade-off.} Take OVERALL PPV ($0.6873$) as a notional predictive-parity target and ask, for each subgroup, what FPR would the model need to satisfy that target given its measured base rate and FNR? Holding base rate and FNR fixed and applying Chouldechova's identity yields a required FPR that ranges from $0.020$ (\texttt{christian}) to $0.100$ (\texttt{black})---a $4.9\times$ ratio. Conversely, taking OVERALL FPR ($0.0291$) as an error-rate-balance target forces required PPV to span $[0.606, 0.883]$---a $0.28$ absolute spread. Either way, the trade-off between the two normative readings is substantial in this dataset, not a merely formal incompatibility (full computation in \texttt{derived\_impossibility\_demo.md}).
 
@@ -184,14 +178,7 @@ Counterfactual fairness \citep{kusner2017counterfactual} and the but-for-causati
 
 \paragraph{Substitution-validity test.} We test the do-intervention assumption empirically (\texttt{cell040}). We score every counterfactual sentence under a pretrained GPT-2 language model and treat per-identity mean perplexity as a proxy for substitution fluency. Across the $120$ counterfactual sentences, mean perplexity is $110.0$ and the top-decile threshold is $214.9$; the twelve flagged sentences cluster on identity strings that are themselves noun phrases (\texttt{psychiatric\_or\_mental\_illness}, identity-level mean PPL $158.6$) or stylistically marked (\texttt{heterosexual}, $136.5$). This is the failure mode the plan flagged: a template that assumes a single-noun identity slot produces ungrammatical strings for compound identities, and the resulting score gaps for those identities cannot be cleanly attributed to identity effect alone. We carry the flagged identities forward into the analysis but treat their counterfactual gaps as mixed signals of identity effect and substitution noise.
 
-\paragraph{Counterfactual gaps.} The full template$\times$identity heatmaps, identity marginal effects, and pairwise gap matrices live in \texttt{inference\_outputs/cell04\{0,1,2,3\}}. Two findings carry analytical weight. First, on neutral templates such as ``I am a [identity]'', the largest counterfactual scores fall on \texttt{black}, \texttt{homosexual\_gay\_or\_lesbian}, \texttt{psychiatric\_or\_mental\_illness}, \texttt{muslim}, and \texttt{white}---exactly the identities the Pillar~1 BPSN analysis flagged as over-flagged (\S5.1). Counterfactual robustness is therefore not independent evidence of bias; it is the same bias measured under a different test, which strengthens the conclusion that the bias is real rather than an artifact of test-set composition. Second, the BERT and LSTM components have visibly different bias profiles per identity (\texttt{cell042}/\texttt{cell043}). On the toxicity head with neutral templates, \texttt{psychiatric\_or\_mental\_illness} is heavily over-flagged by BERT (mean $0.335$) and lightly by LSTM ($0.048$); \texttt{asian} is heavily over-flagged by LSTM ($0.350$) and lightly by BERT ($0.012$). The Optuna blend (\S4.3) places near-all weight on BERT, so the ensemble tracks BERT's bias profile rather than averaging the two. A different blend---or an Optuna run with a fairness-aware objective---would produce a meaningfully different ensemble bias signature, a point we revisit in \S6.4.
-
-\begin{figure}[ht]
-\centering
-\includegraphics[width=\linewidth]{inference_outputs/cell041_markdown-heatmap-per-subtype-head-neutral-templates-only-whe_out00.png}
-\caption{Counterfactual scores per identity ($x$-axis) and prediction head ($y$-axis), restricted to neutral templates ("I am a [identity]", "My friend is [identity]", etc.). Brighter cells indicate higher predicted toxicity-related probability for benign identity mentions. The pattern that \texttt{black}, \texttt{homosexual\_gay\_or\_lesbian}, \texttt{psychiatric\_or\_mental\_illness}, \texttt{muslim}, and \texttt{white} draw the largest scores corroborates the BPSN over-flag finding of \S5.1 under a different test.}
-\label{fig:counterfactual-heatmap}
-\end{figure}
+\paragraph{Counterfactual gaps.} On neutral templates (e.g.\ ``I am a [identity]''), the largest counterfactual scores fall on \texttt{black}, \texttt{homosexual\_gay\_or\_lesbian}, \texttt{psychiatric\_or\_mental\_illness}, \texttt{muslim}, and \texttt{white}---the same identities the Pillar~1 BPSN analysis flagged as over-flagged (\S5.1), so counterfactual robustness corroborates rather than independently establishes the bias. The BERT and LSTM components have visibly different bias profiles per identity: on the toxicity head, \texttt{psychiatric\_or\_mental\_illness} is heavily over-flagged by BERT ($0.335$) but lightly by LSTM ($0.048$); \texttt{asian} is heavily over-flagged by LSTM ($0.350$) but lightly by BERT ($0.012$). The Optuna blend (\S4.3) places near-all weight on BERT, so the ensemble tracks BERT's profile rather than averaging the two---a finding we return to in \S6.4. Full heatmaps, marginal effects, and pairwise gap matrices live in \texttt{inference\_outputs/cell04\{0,1,2,3\}}.
 
 \subsubsection{Critique of the competition metric}
 
@@ -201,20 +188,13 @@ The bias-aware score the competition rewarded combines an Overall AUC on the ful
 \]
 where $M_p$ is the generalized power mean over the per-identity bias AUCs, and the competition fixed $w_{\mathrm{overall}} = 0.25$ and $p = -5$. Each constant encodes a distinct normative claim.
 
-\paragraph{Power mean $p = -5$ as Rawlsian commitment.} As $p \to -\infty$, $M_p$ collapses toward the worst-performing subgroup, so the choice $p = -5$ embeds a Rawlsian commitment to the worst-off identity group: the metric rewards lifting the floor far more than lifting the average. Empirically, however, the bite of this choice is mild on the model we audit. Our sensitivity sweep (Figure~\ref{fig:power-mean-sensitivity}; $p \in \{1, 0.5, -1, -3, -5, -8, -15\}$) moves the final score by only $\sim 0.004$ across the realistic range of $p$. The Rawlsian framing is morally substantive but its quantitative pressure here is small, because the per-identity bias AUCs already lie in a tight band.
-
-\begin{figure}[ht]
-\centering
-\includegraphics[width=0.75\linewidth]{inference_outputs/cell044_markdown-sensitivity-of-the-score-to-the-power-mean-exponent_out02.png}
-\caption{Sensitivity of the competition's final score to the power-mean exponent $p$. The competition's choice of $p = -5$ is marked; sweeping $p$ from $1$ (arithmetic mean) to $-15$ (heavily Rawlsian) moves the final score by only $\sim 0.004$, indicating that the Rawlsian framing is morally substantive but quantitatively mild on this model.}
-\label{fig:power-mean-sensitivity}
-\end{figure}
+\paragraph{Power mean $p = -5$ as Rawlsian commitment.} As $p \to -\infty$, $M_p$ collapses toward the worst-performing subgroup, so the choice $p = -5$ embeds a Rawlsian commitment to the worst-off identity group. Empirically, however, the bite of this choice is mild: sweeping $p \in \{1, 0.5, -1, -3, -5, -8, -15\}$ (\texttt{cell044}) moves the final score by only $\sim 0.004$, because the per-identity bias AUCs already lie in a tight band. The Rawlsian framing is morally substantive but quantitatively mild on this model.
 
 \paragraph{The 25/75 weighting.} The choice $w_{\mathrm{overall}} = 0.25$ is, by contrast, heavily binding. Sweeping $w_{\mathrm{overall}}$ from $0$ to $1$ (\texttt{cell045}/\texttt{cell046}) moves the final score from $0.9350$ (all-bias) to $0.9737$ (all-overall-AUC)---a $0.04$ swing. At the chosen $0.25$, the bias component does roughly three-quarters of the work in pulling the model's headline number down from its Overall AUC. A different weighting, even $0.5$, would have produced a different leaderboard and a structurally different ``winning'' solution.
 
 \paragraph{Identity inclusion and exclusion.} The metric averages bias AUCs over nine of the twenty-four identity columns Civil Comments collected (\S3.1; \texttt{derived\_identity\_inclusion.md}). The cutoff is sample-size driven: at the $0.5$ mention threshold, all nine evaluated identities have $n \geq 238$ and all fifteen excluded identities have $n \leq 217$. The operational rule is defensible; its normative consequence is that the harms experienced by under-represented identities---\texttt{transgender}, \texttt{bisexual}, \texttt{asian}, \texttt{latino}, \texttt{hindu}, \texttt{buddhist}, \texttt{atheist}, and every disability category other than \texttt{psychiatric\_or\_mental\_illness}---do not enter the score the competition rewarded. ``We evaluate where we have data'' compounds the visibility problem of marginalized identities: the groups most likely to suffer rare-but-severe harms are precisely the ones the metric cannot see.
 
-\paragraph{Metric design as upstream value-laden choice.} The three preceding paragraphs trace three distinct normative commitments---Rawlsian aggregation, the fairness--utility weighting, and the identity-inclusion cutoff---that the competition metric encodes without flagging them \citep{stoyanovich2019nutritional, brown2021algorithm}. None is wrong; each is one principled position among several. The audit's contribution here is to render them visible, so participants and downstream users can decide whether the choices the metric inherited match the fairness theory they want to defend.
+Together, these three constants---Rawlsian aggregation, the fairness--utility weighting, and the identity-inclusion cutoff---encode distinct normative commitments the competition metric ships without flagging \citep{stoyanovich2019nutritional, brown2021algorithm}. The audit renders them visible so participants can decide whether the metric's defaults match the fairness theory they want to defend.
 
 % rubric §5: reflection prompts a-d
 \section{Summary}
@@ -231,21 +211,13 @@ We privilege the commenter as the stakeholder of greatest concern: false-positiv
 
 \subsection{Public-sector or industry deployment?}
 
-The two contexts diverge.
-
-\paragraph{Public sector.} No. The differential silencing of identity-mentioning speech (\S5.1, \S6.2) raises concerns under both First-Amendment-style speech protection and disparate-impact analysis. The toxicity label's measurement choice---whose toxicity, rated by whom---is also incompatible with the neutrality typically demanded of government speech regulation.
-
-\paragraph{Industry, private-platform moderation.} With guardrails, perhaps. A defensible deployment would require, at minimum: (a) stakeholder-aware threshold tuning per identity-error-direction rather than a single $s_{HR}$; (b) continuous monitoring of disparate impact across the full twenty-four identity columns, not the nine the metric evaluates; (c) auditing of the rater pool's demographic composition relative to the user population; (d) a public model card \citep{mitchell2019model} and dataset/model nutrition label \citep{stoyanovich2019nutritional} documenting the metric's value choices and the impossibility-result trade-off. Without these, the system as audited is closer to a research artifact than a deployment-ready ADS.
+\textbf{Public sector: no.} The differential silencing of identity-mentioning speech (\S5.1, \S6.2) raises concerns under both First-Amendment-style speech protection and disparate-impact analysis, and the toxicity label's measurement choice (whose toxicity, rated by whom) is incompatible with the neutrality typically demanded of government speech regulation. \textbf{Industry, with guardrails: perhaps.} A defensible deployment would require at minimum (a) stakeholder-aware threshold tuning per identity-error-direction rather than a single $s_{HR}$; (b) continuous monitoring of disparate impact across the full twenty-four identity columns, not just the nine; (c) auditing of the rater pool's demographic composition relative to the user population; and (d) a public model card \citep{mitchell2019model} and dataset/model nutrition label \citep{stoyanovich2019nutritional} documenting the metric's value choices and the impossibility-result trade-off. Without these, the system as audited is closer to a research artifact than a deployment-ready ADS.
 
 \subsection{Recommendations}
 
-\paragraph{Data collection.} Retain rater-level demographics so labels can be disaggregated by annotator identity; the current aggregate fraction collapses information needed to evaluate whose toxicity standard the system enacts (\S3.3).
+\paragraph{Data and labels.} Retain rater-level demographics so labels can be disaggregated by annotator identity; the current aggregate fraction collapses information needed to evaluate whose toxicity standard the system enacts (\S3.3). Report downstream metrics at multiple thresholds (e.g., $0.25, 0.5, 0.75$) rather than one---binarizing at $0.5$ embeds a majoritarian decision rule that minority readings of toxicity cannot push back against.
 
-\paragraph{Data processing.} Report downstream metrics at multiple thresholds (e.g., $0.25, 0.5, 0.75$) rather than one, to make threshold-sensitive findings visible. The current convention of binarizing at $0.5$ embeds a majoritarian decision rule that minority readings of toxicity cannot push back against.
-
-\paragraph{Methodology.} Expand the per-identity evaluation beyond the nine sample-size-cutoff columns to all twenty-four, with explicit confidence bounds reported alongside smaller-sample identities (\S5.3.2). Augment the bias-aware AUC objective with a Module~1 metric (e.g., per-group PPV variance, FPR variance) at training time, so the developers do not inherit the competition metric's normative choices unexamined \citep{raji2020closing}. Run counterfactual substitution tests, with the GPT-2 perplexity filter of \S5.3.1, as part of validation rather than as a post-hoc audit.
-
-\paragraph{Ensemble design.} If structural diversity is the fairness mechanism the original FHSDY ensemble exploited, restoring its missing components should precede further blend-weight tuning. The BERT-dominated blend audited here ($w_{\text{BERT}} = 0.993$, \S4.3) may amplify a single component's inductive bias rather than averaging across components, as Pillar~2's BERT-vs-LSTM divergence suggests.
+\paragraph{Methodology.} Expand per-identity evaluation beyond the nine sample-size-cutoff columns to all twenty-four, with confidence bounds for smaller-sample identities (\S5.3.2). Augment the bias-aware AUC objective with a Module~1 metric (e.g., per-group PPV or FPR variance) at training time, so the metric's normative defaults are not inherited unexamined \citep{raji2020closing}. Run counterfactual substitution tests with the GPT-2 perplexity filter of \S5.3.1 inside validation, not as a post-hoc audit. If structural diversity is the fairness mechanism the original FHSDY ensemble exploited, restore its missing components before further blend-weight tuning---the BERT-dominated blend here ($w_{\text{BERT}} = 0.993$) may amplify a single component's inductive bias rather than averaging across components, as Pillar~2's BERT-vs-LSTM divergence suggests.
 
 % rubric §6
 \section{Project Contributions}
