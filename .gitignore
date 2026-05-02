@@ -11,3 +11,15 @@ __pycache__/
 *.pyc
 *.pyo
 .ipynb_checkpoints/
+.venv/
+
+# LaTeX build artifacts
+*.aux
+*.bbl
+*.blg
+*.log
+*.out
+*.synctex.gz
+
+# LaTeX final output (regenerable; submitted via BrightSpace, not Git)
+report.pdf
