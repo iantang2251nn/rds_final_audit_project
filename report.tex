@@ -41,6 +41,27 @@
 \subsection{Fairness analysis with stakeholder-anchored metric choice}
 \subsection{Additional audit methods}
 \subsubsection{Counterfactual robustness}
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[
+  >=stealth,
+  out/.style={draw, circle, minimum size=1cm}
+]
+  \node[draw, rounded corners, minimum width=4.5cm, minimum height=1.7cm] (C) at (0,0) {};
+  \node[anchor=north west, font=\footnotesize] at ([xshift=4pt,yshift=-4pt]C.north west) {Text comment $C$};
+  \node[draw, dashed, fill=gray!18, rounded corners, minimum width=2.2cm, minimum height=0.7cm, font=\footnotesize] (A) at (0,-0.2) {Identity $A$};
+  \node[out] (Y) at (-2.7,-2.8) {$Y$};
+  \node[out] (Yhat) at (2.7,-2.8) {$\hat Y$};
+  \node[below=2pt of Y, font=\footnotesize] {rater label};
+  \node[below=2pt of Yhat, font=\footnotesize] {model prediction};
+  \draw[->, thick] (C.south) -- (Y.north east);
+  \draw[->, thick] (C.south) -- (Yhat.north west);
+\end{tikzpicture}
+\caption{Anti-causal DAG for toxicity classification. The text comment $C$ causes the human-rater label $Y$ (the writer composes text; raters then read and judge), and the model predictor $\hat Y$ is also computed from $C$. The identity attribute $A$ is not a separate upstream variable: it is a substring inside $C$ (shaded box). Counterfactual interventions on $A$ are operationalized in our experiments via template substitution within $C$, which conflates $\mathrm{do}(A := a')$ with edits to the surrounding text and motivates the substitution-validity test in \S5.3.1.}
+\label{fig:anti-causal-dag}
+\end{figure}
+
 \subsubsection{Critique of the competition metric}
 
 % rubric §5: reflection prompts a-d
