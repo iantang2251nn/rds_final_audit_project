@@ -80,7 +80,3 @@ To find a specific result, look up the section in the map above, then grep filen
 6. **Bright Space submission.** Both partners upload identical PDF + Colab notebook + slides PDF + video.
 
 ---
-
-## Local-only (not in the repo)
-
-`bullshit/` (3.6 GB) holds model weights and the original-solution reference code — gitignored. If you need it, ask Ian.
