@@ -2,7 +2,6 @@
 .DS_Store
 .vscode/
 .claude/
-COMMENTS.md
 
 # Local working dir with model weights / large reference data (3.6 GB)
 bullshit/
@@ -21,6 +20,3 @@ __pycache__/
 *.log
 *.out
 *.synctex.gz
-
-# LaTeX final output (regenerable; submitted via BrightSpace, not Git)
-report.pdf

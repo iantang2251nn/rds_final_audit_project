@@ -18,8 +18,10 @@ Audit of the 3rd-place solution to the Jigsaw Unintended Bias in Toxicity Classi
 | `research paper for reference.pdf` | Borkan et al. — the Jigsaw paper introducing Subgroup / BPSN / BNSP AUCs. |
 | `report.tex` | Final report source. §1–§7 prose complete; compiles to a 10-page PDF. |
 | `references.bib` | BibTeX entries for the 11 citations used in `report.tex` (Borkan, Chouldechova, Hardt, Kusner, Garg, Bostock, Stoyanovich, Brown, Mitchell, Raji, sakami0000). |
-| `report.pdf` | Compiled artifact. Rebuild with `tectonic report.tex`. |
-| `COMMENTS.md` | Append-only review log. Dated, signed reviewer entries with verdicts on outstanding edits to `report.tex`. Consult before editing the report. |
+| `report.pdf` | Compiled artifact. Rebuild with `tectonic report.tex`. Tracked in git so reviewers / Nick can read the latest without rebuilding. |
+| `COMMENTS.md` | Append-only review log. Dated, signed reviewer entries with verdicts on outstanding edits to `report.tex`. Consult before editing the report. Tracked in git for collaboration. |
+| `dag.tex` / `dag.pdf` | Standalone TikZ source + compiled vector for the anti-causal DAG (Figure 1 in the report; used for slides / video). |
+| `anti_causal_dag.png`, `dag.png` | 300 DPI raster export of the DAG. |
 
 ### Notebooks
 
@@ -66,17 +68,16 @@ To find a specific result, look up the section in the map above, then grep filen
 
 **Technical (compute) — done.** All Pillar 1–4 numerical artifacts live in `inference_outputs/`. Cross-check table at the end of `next_steps.md`.
 
-**Report prose — done.** `report.tex` covers §1–§7 at exactly 10 pages. All 11 citations resolve via `references.bib`. Pillar 2 must-dos (TikZ anti-causal DAG, causality framing, Kusner / Garg / Bostock cites), Pillar 4 identity inclusion/exclusion enumeration, and Pillar 5 reflection prompts are in.
+**Report prose — done.** `report.tex` covers §1–§7 + §6.5 Limitations at exactly 10 pages. All 11 citations resolve via `references.bib`. Pillar 2 must-dos (TikZ anti-causal DAG, causality framing, Kusner / Garg / Bostock cites), Pillar 4 identity inclusion/exclusion enumeration, and Pillar 5 reflection prompts are in.
+
+**Review passes — applied and pushed.** Codex's two review passes, a course-materials cross-check (Lectures 2/3/8, M1, Causality ML chapter), and a final cross-validation pass (numbers, identity lists, refs, cells, architecture, rubric coverage). All accepted edits landed; verdicts and what-was-applied recorded in `COMMENTS.md`. Pillar 0 stakeholder table was deliberately dropped — not a course-taught format; the substance is already in the prose.
 
 **Remaining work (in order):**
 
-1. **Apply the `COMMENTS.md` edit set.** Codex's 14 items + 3 course-materials cross-check items + 3 conciseness wins. Net page-count change: −75 to −100 words. See `COMMENTS.md` for verdicts and rationale.
-2. **Add Pillar 0 stakeholder table** and **standalone Limitations subsection**. Both fit inside 10 pages once the conciseness wins land.
-3. **Recompile** with `tectonic report.tex`. Verify cites resolve, page count holds at 10, no `Empty 'thebibliography'` warning.
-4. **Notebook + artifact hygiene** before submission:
+1. **Notebook + artifact hygiene** (pre-submission):
    - `jupyter nbconvert --clear-output --inplace 3rd_place_recreation.ipynb` — strips the stale `UsageError` cell.
-   - `rm -rf inference_outputs/* && python3 extract_outputs.py` — regenerates flat artifacts; verify the `cellNNN` pointers in `report.tex` still resolve.
-5. **Slides + 5-minute video** (deliverables 4 & 5 per `project_instructions.pdf`). PDF slides + MP4 video, both required. Build after the report is locked.
-6. **Bright Space submission.** Both partners upload identical PDF + Colab notebook + slides PDF + video.
+   - `rm -rf inference_outputs/* && python3 extract_outputs.py` — regenerates flat artifacts; then verify the `cellNNN` pointers in `report.tex` (lines 99, 105, 140, 176, 178, 188, 190) still resolve.
+2. **Slides + 5-minute video** (deliverables 4 & 5 per `project_instructions.pdf`). PDF slides + MP4 video, no time-compression. Reuse `dag.pdf` / `anti_causal_dag.png` for the Pillar 2 slide.
+3. **Bright Space submission.** Both partners upload identical PDF + Colab notebook + slides PDF + video.
 
 ---
