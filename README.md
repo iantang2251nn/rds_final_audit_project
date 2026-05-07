@@ -46,7 +46,6 @@ Audit of the 3rd-place solution to the Jigsaw Unintended Bias in Toxicity Classi
 | File | What it is |
 |---|---|
 | `inference_outputs/` | Every output from the audit notebook (figures, tables, stdout) extracted to flat files. Use these to drop into the report without re-running the notebook. Includes `derived_*.md` supplementary tables. |
-| `inference_outputs.zip` | Same content, zipped. |
 | `extract_outputs.py` | Script that produced the above. Re-run after notebook changes: `python3 extract_outputs.py`. Note: does **not** clear the directory before writing — `rm -rf inference_outputs/*` first to avoid stale artifacts. |
 | `derived_analyses/` | Standalone Python scripts (`direction_of_error.py`, `identity_columns.py`, `impossibility_demo.py`) that produce the `inference_outputs/derived_*.md` supplementary tables referenced in `report.tex`. |
 
